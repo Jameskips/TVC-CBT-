@@ -97,3 +97,46 @@ function changePassword() {
 
 
 ---
+
+  function addStudent() {
+  const id = document.getElementById("newStudentID").value.trim();
+  const name = document.getElementById("newStudentName").value.trim();
+  const pass = document.getElementById("newStudentPass").value.trim();
+  const message = document.getElementById("student-message");
+
+  if (!id || !name || !pass) {
+    message.textContent = "All fields are required!";
+    message.className = "error";
+    return;
+  }
+
+  if (students[id]) {
+    message.textContent = "Student ID already exists!";
+    message.className = "error";
+    return;
+  }
+
+  students[id] = { name, password: pass };
+  message.textContent = `Student ${name} added successfully!`;
+  message.className = "success";
+  document.getElementById("newStudentID").value = "";
+  document.getElementById("newStudentName").value = "";
+  document.getElementById("newStudentPass").value = "";
+  displayStudents();
+}
+
+function displayStudents() {
+  const list = document.getElementById("student-list");
+  list.innerHTML = "";
+  for (const id in students) {
+    const li = document.createElement("li");
+    li.textContent = `${id} - ${students[id].name}`;
+    list.appendChild(li);
+  }
+}
+
+// Call displayStudents on page load for admin panel
+document.addEventListener("DOMContentLoaded", displayStudents);
+
+
+---
