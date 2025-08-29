@@ -38,12 +38,27 @@ index.html
 
     <!-- Admin Panel -->
     <div id="admin-panel" class="hidden">
-      <h3>Admin Settings</h3>
-      <label>Change Password:</label><br>
-      <input type="password" id="newPassword" placeholder="New Password">
-      <button onclick="changePassword()">Save</button>
-      <p id="admin-message" class="success"></p>
-    </div>
+  <h3>Admin Settings</h3>
+
+  <!-- Change Admin Password -->
+  <label>Change Password:</label><br>
+  <input type="password" id="newPassword" placeholder="New Password">
+  <button onclick="changePassword()">Save</button>
+  <p id="admin-message" class="success"></p>
+  
+  <hr>
+
+  <!-- Student Management -->
+  <h3>Manage Students</h3>
+  <input type="text" id="newStudentID" placeholder="Student ID">
+  <input type="text" id="newStudentName" placeholder="Student Name">
+  <input type="text" id="newStudentPass" placeholder="Password">
+  <button onclick="addStudent()">Add Student</button>
+  <p id="student-message" class="success"></p>
+
+  <h4>Existing Students:</h4>
+  <ul id="student-list"></ul>
+</div>
   </div>
 
   <script src="app.js"></script>
