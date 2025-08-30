@@ -1,7 +1,7 @@
 // --- JSONBin.io Config ---
-const BIN_ID = "68b26e0cd0ea881f406ae4ad"; 
-const API_KEY = "$2a$10$woiCOWuiTMmOSJbk8sjbuuxwKHeloo1x1uytuEkzE16Bcc9YP898y";
-const BIN_URL = `https://jsonbin.io/app/bins}`;
+const BIN_ID = "68b2ba9e43b1c97be9305ef8"; 
+const API_KEY = "$2a$10$fWok9ba27BiXeCpOUIUYaOKx8SDCAhODlzlPkZ.6pyu3xjClAGuhy";
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // Data placeholders
 let students = {};
