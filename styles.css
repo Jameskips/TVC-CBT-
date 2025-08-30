@@ -20,7 +20,7 @@ body {
   display: none;
 }
 
-input, button {
+input, select, button {
   margin: 8px;
   padding: 10px;
   width: 80%;
@@ -45,4 +45,3 @@ button:hover {
 .success {
   color: green;
 }
-
