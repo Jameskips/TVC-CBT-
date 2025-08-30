@@ -1,26 +1,51 @@
-// Admin password
-let adminPassword = "admin123";
+// --- JSONBin.io Config ---
+const BIN_ID = "YOUR_BIN_ID"; 
+const API_KEY = "YOUR_JSONBIN_API_KEY";
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-// Students
-const students = {
-  "TVC001": { name: "John David", password: "pass001" },
-  "TVC002": { name: "Mary Joseph", password: "pass002" },
-  "TVC003": { name: "Samuel Paul", password: "pass003" }
-};
-
-// Subjects and Questions
-const subjects = {
-  "General Science": [
-    { q: "What is the chemical symbol of Water?", options: ["O2","H2O","CO2","NaCl"], answer: "H2O" },
-    { q: "Which planet is called the Red Planet?", options: ["Earth","Mars","Venus","Jupiter"], answer: "Mars" }
-  ]
-};
-
+// Data placeholders
+let students = {};
+let subjects = {};
+let adminPassword = "";
 let currentStudent = null;
 let currentSubject = null;
 
-// Login
-function login() {
+// --- Helper: Fetch Data from JSONBin ---
+async function loadData() {
+  try {
+    const res = await fetch(BIN_URL + "/latest", {
+      headers: { "X-Master-Key": API_KEY }
+    });
+    const data = await res.json();
+    students = data.record.students;
+    subjects = data.record.subjects;
+    adminPassword = data.record.adminPassword;
+  } catch (err) {
+    console.error("Error loading data:", err);
+    alert("Failed to load data. Check your JSONBin config.");
+  }
+}
+
+// --- Helper: Save Data to JSONBin ---
+async function saveData() {
+  try {
+    await fetch(BIN_URL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": API_KEY
+      },
+      body: JSON.stringify({ students, subjects, adminPassword })
+    });
+  } catch (err) {
+    console.error("Error saving data:", err);
+    alert("Failed to save data. Check your JSONBin config.");
+  }
+}
+
+// --- Login ---
+async function login() {
+  await loadData();
   const studentID = document.getElementById("studentName").value.trim();
   const pass = document.getElementById("password").value;
   const error = document.getElementById("login-error");
@@ -30,7 +55,6 @@ function login() {
   if (pass === adminPassword && studentID.toLowerCase() === "admin") {
     document.getElementById("login-screen").classList.add("hidden");
     document.getElementById("admin-panel").classList.remove("hidden");
-    error.textContent = "";
     displayStudents();
     displaySubjects();
     return;
@@ -47,7 +71,7 @@ function login() {
   }
 }
 
-// Populate subject select for students
+// --- Populate Subjects ---
 function populateSubjectSelect() {
   const select = document.getElementById("subject-select");
   select.innerHTML = "";
@@ -59,7 +83,7 @@ function populateSubjectSelect() {
   }
 }
 
-// Start Exam
+// --- Start Exam ---
 function startExam() {
   const select = document.getElementById("subject-select");
   currentSubject = select.value;
@@ -69,7 +93,7 @@ function startExam() {
   loadExam();
 }
 
-// Load exam
+// --- Load Exam ---
 function loadExam() {
   const form = document.getElementById("exam-form");
   form.innerHTML = "";
@@ -81,7 +105,7 @@ function loadExam() {
   });
 }
 
-// Submit exam
+// --- Submit Exam ---
 function submitExam() {
   let score = 0;
   subjects[currentSubject].forEach((q, i) => {
@@ -94,7 +118,7 @@ function submitExam() {
     `${currentStudent}, you scored ${score} out of ${subjects[currentSubject].length}`;
 }
 
-// Logout
+// --- Logout ---
 function logout() {
   document.getElementById("result-screen").classList.add("hidden");
   document.getElementById("subject-screen").classList.add("hidden");
@@ -103,14 +127,14 @@ function logout() {
   currentSubject = null;
 }
 
-// Admin: Change password
-function changePassword() {
+// --- Admin: Change Password ---
+async function changePassword() {
   const newPass = document.getElementById("newPassword").value;
-  if (newPass) { adminPassword = newPass; document.getElementById("admin-message").textContent = "Admin password updated!"; }
+  if (newPass) { adminPassword = newPass; document.getElementById("admin-message").textContent = "Admin password updated!"; await saveData(); }
 }
 
-// Admin: Student management
-function addStudent() {
+// --- Admin: Student Management ---
+async function addStudent() {
   const id = document.getElementById("newStudentID").value.trim();
   const name = document.getElementById("newStudentName").value.trim();
   const pass = document.getElementById("newStudentPass").value.trim();
@@ -123,15 +147,17 @@ function addStudent() {
   document.getElementById("newStudentName").value = "";
   document.getElementById("newStudentPass").value = "";
   displayStudents();
+  await saveData();
 }
+
 function displayStudents() {
   const list = document.getElementById("student-list");
   list.innerHTML = "";
   for (const id in students) { const li = document.createElement("li"); li.textContent = `${id} - ${students[id].name}`; list.appendChild(li); }
 }
 
-// Admin: Subject management
-function addSubject() {
+// --- Admin: Subject Management ---
+async function addSubject() {
   const name = document.getElementById("newSubjectName").value.trim();
   const message = document.getElementById("subject-message");
   if (!name) { message.textContent = "Enter subject name!"; message.className = "error"; return; }
@@ -140,7 +166,9 @@ function addSubject() {
   message.textContent = `Subject ${name} added!`; message.className = "success";
   document.getElementById("newSubjectName").value = "";
   displaySubjects();
+  await saveData();
 }
+
 function displaySubjects() {
   const list = document.getElementById("subject-list");
   list.innerHTML = "";
@@ -152,8 +180,8 @@ function displaySubjects() {
   }
 }
 
-// Admin: Question management
-function addQuestion() {
+// --- Admin: Question Management ---
+async function addQuestion() {
   const subject = document.getElementById("question-subject-select").value;
   const qText = document.getElementById("question-text").value.trim();
   const o1 = document.getElementById("question-option1").value.trim();
@@ -171,4 +199,5 @@ function addQuestion() {
   document.getElementById("question-option3").value = "";
   document.getElementById("question-option4").value = "";
   document.getElementById("question-answer").value = "";
+  await saveData();
 }
