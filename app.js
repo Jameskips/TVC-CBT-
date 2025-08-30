@@ -1,7 +1,7 @@
 // Default admin password
 let adminPassword = "admin123";
 
-// Student accounts (you can add/remove students here)
+// Student accounts (start with sample students)
 const students = {
   "TVC001": { name: "John David", password: "pass001" },
   "TVC002": { name: "Mary Joseph", password: "pass002" },
@@ -34,6 +34,7 @@ function login() {
     document.getElementById("login-screen").classList.add("hidden");
     document.getElementById("admin-panel").classList.remove("hidden");
     error.textContent = "";
+    displayStudents();
     return;
   }
 
@@ -95,10 +96,8 @@ function changePassword() {
   }
 }
 
-
----
-
-  function addStudent() {
+// Student management functions
+function addStudent() {
   const id = document.getElementById("newStudentID").value.trim();
   const name = document.getElementById("newStudentName").value.trim();
   const pass = document.getElementById("newStudentPass").value.trim();
@@ -135,7 +134,6 @@ function displayStudents() {
   }
 }
 
-// Call displayStudents on page load for admin panel
 document.addEventListener("DOMContentLoaded", displayStudents);
 
 
