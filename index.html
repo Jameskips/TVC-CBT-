@@ -20,9 +20,16 @@
       <p id="login-error" class="error"></p>
     </div>
 
+    <!-- Subject Selection -->
+    <div id="subject-screen" class="hidden">
+      <h3>Select Subject</h3>
+      <select id="subject-select"></select><br>
+      <button onclick="startExam()">Start Exam</button>
+    </div>
+
     <!-- Exam Screen -->
     <div id="exam-screen" class="hidden">
-      <h3>Exam: General Science</h3>
+      <h3 id="exam-title">Exam</h3>
       <form id="exam-form"></form>
       <button onclick="submitExam()">Submit Exam</button>
     </div>
@@ -43,7 +50,7 @@
       <input type="password" id="newPassword" placeholder="New Password">
       <button onclick="changePassword()">Save</button>
       <p id="admin-message" class="success"></p>
-      
+
       <hr>
 
       <!-- Student Management -->
@@ -56,10 +63,34 @@
 
       <h4>Existing Students:</h4>
       <ul id="student-list"></ul>
+
+      <hr>
+
+      <!-- Subject Management -->
+      <h3>Manage Subjects & Questions</h3>
+      <input type="text" id="newSubjectName" placeholder="New Subject Name">
+      <button onclick="addSubject()">Add Subject</button>
+      <p id="subject-message" class="success"></p>
+
+      <h4>Existing Subjects:</h4>
+      <ul id="subject-list"></ul>
+
+      <hr>
+
+      <!-- Question Management -->
+      <h4>Add Question</h4>
+      <select id="question-subject-select"></select><br>
+      <input type="text" id="question-text" placeholder="Question Text"><br>
+      <input type="text" id="question-option1" placeholder="Option 1">
+      <input type="text" id="question-option2" placeholder="Option 2">
+      <input type="text" id="question-option3" placeholder="Option 3">
+      <input type="text" id="question-option4" placeholder="Option 4">
+      <input type="text" id="question-answer" placeholder="Correct Answer"><br>
+      <button onclick="addQuestion()">Add Question</button>
+      <p id="question-message" class="success"></p>
     </div>
   </div>
 
   <script src="app.js"></script>
 </body>
 </html>
-
