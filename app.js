@@ -1,6 +1,6 @@
 // --- JSONBin.io Config ---
 const BIN_ID = "68b25b02d0ea881f406ad0d3"; 
-const API_KEY = "$2a$10$woiCOWuiTMmOSJbk8sjbuuxwKHeloo1x1uytuEkzE16Bcc9YP898y";
+const API_KEY = "$2a$10$bssoQhcT2IskJb434oT11eQaL/exumkx6Ukb6yWMGx3P49RaqJuKC";
 const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // Data placeholders
