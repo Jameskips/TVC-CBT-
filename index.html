@@ -1,96 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TVC High School - CBT System</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVC High School CBT</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <h1>The Valued Child (TVC) High School</h1>
-    <h2>Computer Based Test (CBT)</h2>
 
-    <!-- Login Screen -->
-    <div id="login-screen">
-      <h3>Login</h3>
-      <input type="text" id="studentName" placeholder="Enter your Name/ID"><br>
-      <input type="password" id="password" placeholder="Enter Password"><br>
-      <button onclick="login()">Login</button>
-      <p id="login-error" class="error"></p>
-    </div>
+<!-- Login Screen -->
+<div id="login-screen">
+  <h2>Login</h2>
+  <input type="text" id="studentName" placeholder="Enter Name/ID">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="login-error" class="error"></p>
+</div>
 
-    <!-- Subject Selection -->
-    <div id="subject-screen" class="hidden">
-      <h3>Select Subject</h3>
-      <select id="subject-select"></select><br>
-      <button onclick="startExam()">Start Exam</button>
-    </div>
+<!-- Admin Panel -->
+<div id="admin-panel" class="hidden">
+  <h2>Admin Dashboard</h2>
 
-    <!-- Exam Screen -->
-    <div id="exam-screen" class="hidden">
-      <h3 id="exam-title">Exam</h3>
-      <form id="exam-form"></form>
-      <button onclick="submitExam()">Submit Exam</button>
-    </div>
-
-    <!-- Result Screen -->
-    <div id="result-screen" class="hidden">
-      <h3>Result</h3>
-      <p id="result-text"></p>
-      <button onclick="logout()">Logout</button>
-    </div>
-
-    <!-- Admin Panel -->
-    <div id="admin-panel" class="hidden">
-      <h3>Admin Settings</h3>
-
-      <!-- Change Admin Password -->
-      <label>Change Password:</label><br>
-      <input type="password" id="newPassword" placeholder="New Password">
-      <button onclick="changePassword()">Save</button>
-      <p id="admin-message" class="success"></p>
-
-      <hr>
-
-      <!-- Student Management -->
-      <h3>Manage Students</h3>
-      <input type="text" id="newStudentID" placeholder="Student ID">
-      <input type="text" id="newStudentName" placeholder="Student Name">
-      <input type="text" id="newStudentPass" placeholder="Password">
-      <button onclick="addStudent()">Add Student</button>
-      <p id="student-message" class="success"></p>
-
-      <h4>Existing Students:</h4>
-      <ul id="student-list"></ul>
-
-      <hr>
-
-      <!-- Subject Management -->
-      <h3>Manage Subjects & Questions</h3>
-      <input type="text" id="newSubjectName" placeholder="New Subject Name">
-      <button onclick="addSubject()">Add Subject</button>
-      <p id="subject-message" class="success"></p>
-
-      <h4>Existing Subjects:</h4>
-      <ul id="subject-list"></ul>
-
-      <hr>
-
-      <!-- Question Management -->
-      <h4>Add Question</h4>
-      <select id="question-subject-select"></select><br>
-      <input type="text" id="question-text" placeholder="Question Text"><br>
-      <input type="text" id="question-option1" placeholder="Option 1">
-      <input type="text" id="question-option2" placeholder="Option 2">
-      <input type="text" id="question-option3" placeholder="Option 3">
-      <input type="text" id="question-option4" placeholder="Option 4">
-      <input type="text" id="question-answer" placeholder="Correct Answer"><br>
-      <button onclick="addQuestion()">Add Question</button>
-      <p id="question-message" class="success"></p>
-    </div>
+  <!-- Change Admin Password -->
+  <div>
+    <input type="password" id="newPassword" placeholder="New Admin Password">
+    <button onclick="changePassword()">Change Password</button>
+    <p id="admin-message"></p>
   </div>
 
-  <script src="app.js"></script>
+  <!-- Student Management -->
+  <div>
+    <h3>Manage Students</h3>
+    <input type="text" id="newStudentID" placeholder="Student ID">
+    <input type="text" id="newStudentName" placeholder="Student Name">
+    <input type="text" id="newStudentPass" placeholder="Password">
+    <button onclick="addStudent()">Add Student</button>
+    <p id="student-message"></p>
+    <ul id="student-list"></ul>
+  </div>
+
+  <!-- Subject Management -->
+  <div>
+    <h3>Manage Subjects</h3>
+    <input type="text" id="newSubjectName" placeholder="Subject Name">
+    <button onclick="addSubject()">Add Subject</button>
+    <p id="subject-message"></p>
+    <ul id="subject-list"></ul>
+  </div>
+
+  <!-- Question Management -->
+  <div>
+    <h3>Manage Questions</h3>
+    <select id="question-subject-select"></select>
+    <input type="text" id="question-text" placeholder="Question Text">
+    <input type="text" id="question-option1" placeholder="Option 1">
+    <input type="text" id="question-option2" placeholder="Option 2">
+    <input type="text" id="question-option3" placeholder="Option 3">
+    <input type="text" id="question-option4" placeholder="Option 4">
+    <input type="text" id="question-answer" placeholder="Correct Answer">
+    <button onclick="addQuestion()">Add Question</button>
+    <p id="question-message"></p>
+  </div>
+
+  <!-- View Scores -->
+  <div>
+    <h3>Student Scores</h3>
+    <button onclick="viewAllScores()">Refresh Scores</button>
+    <table id="scores-table" border="1">
+      <tr><th>Student</th><th>Subject</th><th>Score</th></tr>
+    </table>
+  </div>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<!-- Subject Selection for Students -->
+<div id="subject-screen" class="hidden">
+  <h2>Select Subject</h2>
+  <select id="subject-select"></select>
+  <button onclick="startExam()">Start Exam</button>
+</div>
+
+<!-- Exam Screen -->
+<div id="exam-screen" class="hidden">
+  <h2 id="exam-title"></h2>
+  <p>Time Remaining: <span id="timer">00:00</span></p>
+  <form id="exam-form"></form>
+  <button onclick="submitExam()">Submit Exam</button>
+</div>
+
+<!-- Result Screen (hidden from students) -->
+<div id="result-screen" class="hidden">
+  <h2>Exam Submitted!</h2>
+  <p>Your score is recorded and only admin can view it.</p>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
