@@ -1,5 +1,5 @@
 // --- JSONBin.io Config ---
-const BIN_ID = "YOUR_BIN_ID"; 
+const BIN_ID = "68b25b02d0ea881f406ad0d3"; 
 const API_KEY = "YOUR_JSONBIN_API_KEY";
 const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
