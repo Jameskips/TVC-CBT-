@@ -136,5 +136,3 @@ function displayStudents() {
 
 document.addEventListener("DOMContentLoaded", displayStudents);
 
-
----
